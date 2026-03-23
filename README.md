@@ -55,7 +55,7 @@ cp .env.example .env
 ```
 
 ```
-BOT_TOKEN=your-telegram-bot-token
+TAILOR_BOT_TOKEN=your-telegram-bot-token
 ANTHROPIC_API_KEY=sk-ant-your-key
 ```
 
@@ -84,7 +84,7 @@ Send `/cancel` at any point to restart the flow.
 
 1. Fork or import the repo in [Railway](https://railway.app)
 2. Add environment variables in the Railway dashboard:
-   - `BOT_TOKEN`
+   - `TAILOR_BOT_TOKEN`
    - `ANTHROPIC_API_KEY`
 3. Railway auto-detects Node.js, runs `npm run build` and then `npm start`
 4. Set the service type to **Worker** (not Web) — the bot uses polling, not webhooks

@@ -8,5 +8,5 @@ function requireEnv(name: string): string {
   return value;
 }
 
-export const BOT_TOKEN = requireEnv('BOT_TOKEN');
+export const BOT_TOKEN = requireEnv('TAILOR_BOT_TOKEN');
 export const ANTHROPIC_API_KEY = requireEnv('ANTHROPIC_API_KEY');
