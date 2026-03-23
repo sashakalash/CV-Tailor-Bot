@@ -37,6 +37,7 @@ Upload your CV as a PDF, paste the job description, and get back a new PDF with 
 - Node.js 18+
 - Telegram bot token (from [@BotFather](https://t.me/BotFather))
 - Anthropic API key (from [console.anthropic.com](https://console.anthropic.com))
+- [Railway](https://railway.app) account (for cloud deployment)
 
 ### Installation
 

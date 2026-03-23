@@ -8,6 +8,7 @@ Return ONLY valid JSON matching this exact schema:
   "email": "string (email address, if present)",
   "phone": "string (phone number, if present)",
   "location": "string (city/country, if present)",
+  "github": "string (GitHub URL, if present)",
   "linkedin": "string (LinkedIn URL, if present)",
   "summary": "string (professional summary/objective paragraph)",
   "skills": [

@@ -10,3 +10,4 @@ function requireEnv(name: string): string {
 
 export const BOT_TOKEN = requireEnv('TAILOR_BOT_TOKEN');
 export const ANTHROPIC_API_KEY = requireEnv('ANTHROPIC_API_KEY');
+export const IS_DEBUG = process.env.DEBUG === 'true';

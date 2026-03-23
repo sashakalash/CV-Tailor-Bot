@@ -63,7 +63,7 @@ export async function extractCvStructure(rawText: string): Promise<CvData> {
 }
 
 export async function rewriteCvForJd(cv: CvData, jobDescription: string): Promise<CvData> {
-  const userMessage = `## Original CV\n${JSON.stringify(cv, null, 2)}\n\n## Job Description\n${jobDescription}`;
+  const userMessage = `## Original CV\n${JSON.stringify(cv)}\n\n## Job Description\n${jobDescription}`;
 
   const raw = await callClaude(REWRITE_MODEL, REWRITE_SYSTEM_PROMPT, userMessage);
 

@@ -24,6 +24,7 @@ export const cvDataSchema = z.object({
   email: z.string().optional(),
   phone: z.string().optional(),
   location: z.string().optional(),
+  github: z.string().optional(),
   linkedin: z.string().optional(),
   summary: z.string(),
   skills: z.array(cvSkillCategorySchema),

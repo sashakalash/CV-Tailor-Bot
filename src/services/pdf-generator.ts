@@ -55,20 +55,48 @@ export function generateCvPdf(cv: CvData): Promise<Buffer> {
         .text(cv.title, { align: 'center' });
     }
 
-    // Contact line
-    const contactParts: string[] = [];
-    if (cv.email) contactParts.push(cv.email);
-    if (cv.phone) contactParts.push(cv.phone);
-    if (cv.location) contactParts.push(cv.location);
-    if (cv.linkedin) contactParts.push(cv.linkedin);
+    // Contact line 1: email | phone | location
+    const line1Parts: string[] = [];
+    if (cv.email) line1Parts.push(cv.email);
+    if (cv.phone) line1Parts.push(cv.phone);
+    if (cv.location) line1Parts.push(cv.location);
 
-    if (contactParts.length > 0) {
+    if (line1Parts.length > 0) {
       doc.moveDown(0.3);
       doc
         .fontSize(9)
         .font('Helvetica')
         .fillColor(COLORS.light)
-        .text(contactParts.join('  |  '), { align: 'center' });
+        .text(line1Parts.join('  |  '), {
+          align: 'center',
+          link: cv.email ? `mailto:${cv.email}` : undefined,
+        });
+    }
+
+    // Contact line 2: linkedin | github (centered, clickable, displayed without https://)
+    if (cv.linkedin || cv.github) {
+      doc.moveDown(0.1);
+      doc.fontSize(9).font('Helvetica');
+
+      const links: Array<{ label: string; url: string }> = [];
+      if (cv.linkedin) {
+        const label = cv.linkedin.replace(/^https?:\/\//, '');
+        const url = cv.linkedin.startsWith('http') ? cv.linkedin : `https://${cv.linkedin}`;
+        links.push({ label, url });
+      }
+      if (cv.github) {
+        const label = cv.github.replace(/^https?:\/\//, '');
+        const url = cv.github.startsWith('http') ? cv.github : `https://${cv.github}`;
+        links.push({ label, url });
+      }
+
+      // Render as centered text with link on the entire line (first link URL)
+      // Both URLs are visible as text, so users can copy-paste even if only one is clickable
+      const sep = '  |  ';
+      const fullText = links.map((l) => l.label).join(sep);
+      doc.fillColor(COLORS.accent).text(fullText, { align: 'center', link: links[0].url });
+
+      doc.moveDown(0.5);
     }
 
     // Summary

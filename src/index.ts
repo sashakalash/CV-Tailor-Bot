@@ -1,13 +1,26 @@
 import { createBot } from './bot.js';
+import { IS_DEBUG } from './config.js';
 
 const bot = createBot();
 
 bot.catch((err) => {
-  console.error('Bot error:', err);
+  const message = err instanceof Error ? err.message : String(err);
+  console.error('Bot error:', message);
+  if (IS_DEBUG) {
+    console.error(err);
+  }
 });
 
-// eslint-disable-next-line no-console
-bot.start({ onStart: () => console.log('CV Editor Bot is running...') });
+bot.start({
+  onStart: () => {
+    console.log('CV Editor Bot is running...');
+    if (IS_DEBUG) {
+      console.log('DEBUG MODE ENABLED');
+      console.log('TAILOR_BOT_TOKEN:', '[set]');
+      console.log('ANTHROPIC_API_KEY:', '[set]');
+    }
+  },
+});
 
 // Graceful shutdown
 const shutdown = (): void => {
