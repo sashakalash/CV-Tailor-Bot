@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm info:*)",
+      "Read(//Users/kalash/Development/AI/Remote.Team technical assignment for Front-End Developer.fig/tile-expert-header/**)",
+      "Bash(npx ng:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(mkdir -p \"/Users/kalash/Development/AI/Remote.Team technical assignment for Front-End Developer.fig/tile-expert-header/src/assets/images\")",
+      "Bash(cp \"/Users/kalash/Development/AI/Remote.Team technical assignment for Front-End Developer.fig/images/5abac89cb6e4d3b84f5fb4fe3bbbc2bce79f17c5.png\" \"/Users/kalash/Development/AI/Remote.Team technical assignment for Front-End Developer.fig/tile-expert-header/src/assets/images/logo.png\")",
+      "Bash(cp \"/Users/kalash/Development/AI/Remote.Team technical assignment for Front-End Developer.fig/images/431a79e4ae87c04d13d25bdf727cdc5273d2d4dc.png\" \"/Users/kalash/Development/AI/Remote.Team technical assignment for Front-End Developer.fig/tile-expert-header/src/assets/images/avatar.png\")",
+      "Bash(npx ctx7@latest library grammyjs conversations \"how to create and register conversation with waitFor wait\")",
+      "Bash(mkdir -p public/assets/images)",
+      "Bash(cp src/assets/images/logo.png public/assets/images/logo.png)",
+      "Bash(cp src/assets/images/avatar.png public/assets/images/avatar.png)",
+      "Bash(npx ctx7@latest library grammyjs \"conversations v2 createConversation waitFor\")",
+      "Bash(npx ctx7@latest docs /grammyjs/conversations \"how to create and register a conversation with createConversation, waitFor, wait, and session setup\")",
+      "Bash(git init:*)",
+      "Bash(npx husky:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx eslint:*)",
+      "Bash(cp /Users/kalash/.claude/.eslintignore .)",
+      "Bash(cp /Users/kalash/.claude/.prettierignore .)",
+      "Bash(npx playwright:*)"
+    ]
+  }
+}
