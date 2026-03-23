@@ -41,8 +41,8 @@ Upload your CV as a PDF, paste the job description, and get back a new PDF with 
 ### Installation
 
 ```bash
-git clone <repo-url>
-cd pdf-editor
+git clone https://github.com/sashakalash/CV-Tailor-Bot.git
+cd CV-Tailor-Bot
 npm install
 ```
 
@@ -80,11 +80,23 @@ node dist/index.js
 
 Send `/cancel` at any point to restart the flow.
 
+## Deploy to Railway
+
+1. Fork or import the repo in [Railway](https://railway.app)
+2. Add environment variables in the Railway dashboard:
+   - `BOT_TOKEN`
+   - `ANTHROPIC_API_KEY`
+3. Railway auto-detects Node.js, runs `npm run build` and then `npm start`
+4. Set the service type to **Worker** (not Web) — the bot uses polling, not webhooks
+
+That's it. No Procfile config needed — Railway picks it up automatically.
+
 ## Scripts
 
 | Command          | Description               |
 | ---------------- | ------------------------- |
 | `npm run dev`    | Start with hot reload     |
 | `npm run build`  | Compile TypeScript        |
+| `npm run start`  | Run compiled bot          |
 | `npm run lint`   | Run ESLint                |
 | `npm run format` | Format code with Prettier |
