@@ -10,6 +10,7 @@ Return ONLY valid JSON matching this exact schema:
   "location": "string (city/country, if present)",
   "github": "string (GitHub URL, if present)",
   "linkedin": "string (LinkedIn URL, if present)",
+  "website": "string (personal website/portfolio URL, if present)",
   "summary": "string (professional summary/objective paragraph)",
   "skills": [
     {

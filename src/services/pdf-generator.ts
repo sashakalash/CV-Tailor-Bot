@@ -56,47 +56,74 @@ export function generateCvPdf(cv: CvData): Promise<Buffer> {
     }
 
     // Contact line 1: email | phone | location
-    const line1Parts: string[] = [];
-    if (cv.email) line1Parts.push(cv.email);
-    if (cv.phone) line1Parts.push(cv.phone);
-    if (cv.location) line1Parts.push(cv.location);
+    // Render as plain centered text, then overlay clickable annotation on email only
+    {
+      const sep = '  |  ';
+      const line1Parts: string[] = [];
+      if (cv.email) line1Parts.push(cv.email);
+      if (cv.phone) line1Parts.push(cv.phone);
+      if (cv.location) line1Parts.push(cv.location);
 
-    if (line1Parts.length > 0) {
-      doc.moveDown(0.3);
-      doc
-        .fontSize(9)
-        .font('Helvetica')
-        .fillColor(COLORS.light)
-        .text(line1Parts.join('  |  '), {
-          align: 'center',
-          link: cv.email ? `mailto:${cv.email}` : undefined,
-        });
+      if (line1Parts.length > 0) {
+        doc.moveDown(0.3);
+        doc.fontSize(9).font('Helvetica');
+        const fullText = line1Parts.join(sep);
+        const lineY = doc.y;
+        doc.fillColor(COLORS.light).text(fullText, { align: 'center' });
+
+        // Add clickable annotation over email portion
+        if (cv.email) {
+          const fullWidth = doc.widthOfString(fullText);
+          const emailWidth = doc.widthOfString(cv.email);
+          const lineStartX = MARGIN + (CONTENT_WIDTH - fullWidth) / 2;
+          const lineHeight = 12;
+          doc.link(lineStartX, lineY, emailWidth, lineHeight, `mailto:${cv.email}`);
+        }
+      }
     }
 
-    // Contact line 2: linkedin | github (centered, clickable, displayed without https://)
-    if (cv.linkedin || cv.github) {
-      doc.moveDown(0.1);
-      doc.fontSize(9).font('Helvetica');
-
-      const links: Array<{ label: string; url: string }> = [];
+    // Contact line 2: linkedin | github | website
+    // Render as colored centered text, then overlay individual clickable annotations
+    {
+      const sep = '  |  ';
+      const linkItems: Array<{ label: string; url: string }> = [];
       if (cv.linkedin) {
         const label = cv.linkedin.replace(/^https?:\/\//, '');
         const url = cv.linkedin.startsWith('http') ? cv.linkedin : `https://${cv.linkedin}`;
-        links.push({ label, url });
+        linkItems.push({ label, url });
       }
       if (cv.github) {
         const label = cv.github.replace(/^https?:\/\//, '');
         const url = cv.github.startsWith('http') ? cv.github : `https://${cv.github}`;
-        links.push({ label, url });
+        linkItems.push({ label, url });
+      }
+      if (cv.website) {
+        const label = cv.website.replace(/^https?:\/\//, '');
+        const url = cv.website.startsWith('http') ? cv.website : `https://${cv.website}`;
+        linkItems.push({ label, url });
       }
 
-      // Render as centered text with link on the entire line (first link URL)
-      // Both URLs are visible as text, so users can copy-paste even if only one is clickable
-      const sep = '  |  ';
-      const fullText = links.map((l) => l.label).join(sep);
-      doc.fillColor(COLORS.accent).text(fullText, { align: 'center', link: links[0].url });
+      if (linkItems.length > 0) {
+        doc.moveDown(0.1);
+        doc.fontSize(9).font('Helvetica');
+        const fullText = linkItems.map((l) => l.label).join(sep);
+        const lineY = doc.y;
+        doc.fillColor(COLORS.accent).text(fullText, { align: 'center' });
 
-      doc.moveDown(0.5);
+        // Overlay individual clickable annotations
+        const fullWidth = doc.widthOfString(fullText);
+        const lineStartX = MARGIN + (CONTENT_WIDTH - fullWidth) / 2;
+        const lineHeight = 12;
+        let offsetX = 0;
+        for (let i = 0; i < linkItems.length; i++) {
+          if (i > 0) offsetX += doc.widthOfString(sep);
+          const labelWidth = doc.widthOfString(linkItems[i].label);
+          doc.link(lineStartX + offsetX, lineY, labelWidth, lineHeight, linkItems[i].url);
+          offsetX += labelWidth;
+        }
+
+        doc.moveDown(0.5);
+      }
     }
 
     // Summary
